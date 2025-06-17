@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://bst1wuhigrq8x"]
+
+[ext_resource type="Texture2D" uid="uid://dwy36e8o5dakl" path="res://char/sprite.png" id="1_imniu"]
+[ext_resource type="Script" uid="uid://cbsae6m2fs7fv" path="res://char/player.gd" id="1_rmstp"]
+[ext_resource type="PackedScene" uid="uid://dfo11eu0peums" path="res://char/arrow.tscn" id="2_vx1ls"]
+[ext_resource type="Texture2D" uid="uid://dp0sdb83122js" path="res://asset/bow_sprite.png" id="3_bwnv6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_imniu"]
+radius = 26.0
+height = 86.0
+
+[node name="Player" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+script = ExtResource("1_rmstp")
+arrow_scene = ExtResource("2_vx1ls")
+min_force = 1.0
+max_force = 5.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+position = Vector2(0, 5.96046e-08)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_imniu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CapsuleShape2D_imniu")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position_smoothing_speed = 15.0
+rotation_smoothing_speed = 1.0
+
+[node name="BowSprite" type="Sprite2D" parent="Player"]
+visible = false
+position = Vector2(27, 14)
+rotation = -2.63196
+scale = Vector2(0.05, 0.061291)
+texture = ExtResource("3_bwnv6")
+
+[node name="BowForceLabel" type="Label" parent="Player"]
+offset_right = 40.0
+offset_bottom = 23.0
