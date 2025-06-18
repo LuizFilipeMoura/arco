@@ -77,6 +77,7 @@ func is_valid_target(area: Area2D) -> bool:
 
 func calculate_damage() -> float:
 	var damage = base_damage * fire_force
+	if damage < 1 : damage = 1
 	print("Arrow hit! Damage: ", damage)
 	return damage
 
