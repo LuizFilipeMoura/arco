@@ -1,51 +1,49 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4jgkqw34ndhu"]
+[gd_scene load_steps=5 format=3 uid="uid://s60nsv4toap5"]
 
-[ext_resource type="Script" uid="uid://b5o1gxp41pil6" path="res://char/enemy.gd" id="1_c265s"]
-[ext_resource type="Texture2D" uid="uid://da843mu7w2e0e" path="res://char/enemy.png" id="1_mk60s"]
-[ext_resource type="Texture2D" uid="uid://r6m3xkhooy21" path="res://char/visioncone_sprite.png" id="2_lymva"]
+[ext_resource type="Script" uid="uid://b5o1gxp41pil6" path="res://char/enemy.gd" id="1_nfc0p"]
+[ext_resource type="Texture2D" uid="uid://da843mu7w2e0e" path="res://char/enemy.png" id="2_rgpw8"]
+[ext_resource type="Texture2D" uid="uid://r6m3xkhooy21" path="res://char/visioncone_sprite.png" id="3_jrcno"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mk60s"]
 size = Vector2(73, 96)
 
-[node name="Enemy" type="Node2D"]
+[node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_nfc0p")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-script = ExtResource("1_c265s")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4, 1)
 shape = SubResource("RectangleShape2D_mk60s")
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(-0.1, 0.1)
-texture = ExtResource("1_mk60s")
+texture = ExtResource("2_rgpw8")
 
-[node name="VisionArea" type="Area2D" parent="CharacterBody2D"]
+[node name="VisionArea" type="Area2D" parent="."]
 position = Vector2(240, -1)
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D/VisionArea"]
+[node name="Sprite2D" type="Sprite2D" parent="VisionArea"]
 modulate = Color(1, 1, 1, 0.513726)
 position = Vector2(0, -1)
 rotation = 1.5708
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_lymva")
+texture = ExtResource("3_jrcno")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CharacterBody2D/VisionArea"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VisionArea"]
 visible = false
 position = Vector2(0, 2)
 rotation = 1.5708
 scale = Vector2(0.5, 0.5)
 polygon = PackedVector2Array(-119, -416, -119, -414.1, -122, -412.1, -122, -401, -176.8, -401, -180, -397.8, -180, -386, -218.8, -386, -223, -381.8, -223, -372, -257.1, -372, -259.1, -369, -261, -369, -261, -358, -291.2, -358, -296, -349.5, -296, -343, -319.1, -343, -321.1, -340, -323, -340, -323, -329, -346.2, -329, -350, -321.5, -350, -315, -368, -315, -373, -308.7, -373, -302, -391.5, -302, -395.9, -287.9, -409.1, -287, -413.2, -287, -418, -278.5, -418, -271.3, -411, -262, -405.8, -262, -404, -246.8, -404, -243.9, -392.9, -237.2, -392, -226.8, -392, -223.1, -382.8, -215, -379.8, -215, -378, -200.8, -378, -197.9, -366.8, -191.1, -365, -179.7, -365, -175.2, -357.8, -168, -353.8, -168, -352, -155.7, -352, -152.1, -343.7, -145, -340.8, -145, -339, -131.7, -339, -127, -334, -123.1, -334, -121, -327.8, -121, -326, -106.8, -326, -102.9, -314.8, -96.2, -313, -83.7, -313, -79.2, -306.8, -73, -302.7, -73, -301, -61.7, -301, -56.1, -292.7, -49, -289.7, -49, -288, -37.7, -288, -33.2, -280.8, -26, -275.8, -26, -274, -9.79999, -274, -6.89999, -264.6, -1, -262.8, -1, -262, 8.20001, -262, 13.8, -253.8, 22, -249.8, 22, -249, 30.2, -249, 37.8, -240.8, 46, -236.8, 46, -235, 60.2, -235, 64.1, -225.6, 70, -223.8, 70, -223, 76.2, -223, 85, -210.9, 93.8, -210, 103.2, -210, 108.7, -203.9, 116, -198.7, 116, -196, 132.3, -196, 135, -189.7, 140, -184.8, 140, -183, 154.2, -183, 156.8, -176.8, 163, -171.8, 163, -170, 176.3, -170, 180, -160.7, 187, -158.8, 187, -157, 201.2, -157, 205.1, -149.6, 210, -145.8, 210, -144, 223.3, -144, 227, -132.9, 234.8, -131, 250.2, -131, 253.4, -120.8, 256.8, -119, 269.3, -119, 273.8, -112.8, 280, -107.7, 280, -106, 291.3, -106, 296.9, -97.7, 304, -94.8, 304, -93, 317.3, -93, 321.1, -81.9, 327.8, -81, 336.2, -81, 342.9, -72.7, 350, -69.8, 350, -68, 363.3, -68, 366.9, -60.7, 373, -57.7, 373, -56, 384.3, -56, 388.9, -47.7, 396, -45.8, 396, -44, 408.3, -44, 413.1, -32.9, 419.8, -32, 427.2, -32, 435, -27, 438.9, -27, 441, -20.8, 441, -20, 451.2, -20, 456.8, -14.8, 462, -9, 462, -9, 467.8, -5, 471.8, -5, 474, 5, 474, 8, 470, 10, 470, 10, 462, 15.1, 462, 22, 450.6, 22, 441.4, 23.3, 441, 27, 441, 31, 436, 32.6, 436, 34, 429.2, 34, 420.1, 41.5, 416, 43.6, 416, 47, 402.2, 47, 395.5, 49.1, 395, 52, 395, 56, 390, 57.7, 390, 59, 381.1, 59, 373, 62.8, 373, 67.8, 368, 69.6, 368, 72, 356.2, 72, 349.2, 72.5, 349, 78, 349, 81, 345, 82.6, 345, 85, 333.2, 85, 327, 88.8, 327, 92.8, 323, 94.6, 323, 98, 306.2, 98, 303.2, 105.4, 300, 107.6, 300, 111, 285.2, 111, 280, 116.2, 280, 123, 267.5, 123, 257, 129, 257, 133, 252, 134.7, 252, 136, 243.1, 136, 233.2, 143.4, 230, 145.5, 230, 149, 217.3, 149, 209.6, 152.4, 209, 156.1, 209, 158.1, 206, 159.6, 206, 162, 196.2, 162, 187.1, 170.5, 182, 172.6, 182, 175, 170.2, 175, 163, 180, 163, 184, 158, 185.7, 158, 188, 143.2, 188, 140, 191.8, 140, 195.8, 136, 197.4, 136, 200, 128.3, 200, 117.6, 201.1, 116, 206.1, 116, 213, 104.6, 213, 92.5, 215.1, 92, 219, 92, 222, 88, 223.6, 88, 226, 76.2, 226, 69.4, 230.3, 68, 233.3, 68, 239, 55.4, 239, 45.4, 240.3, 45, 245, 45, 249, 40, 250.7, 40, 253, 24.1, 253, 22, 256.8, 22, 261.8, 17, 263.7, 17, 266, 3.20001, 266, -1.60001, 270.3, -3, 273.2, -3, 279, -13.5, 279, -26, 285, -26, 289, -31, 290.7, -31, 293, -44.8, 293, -49.5, 295.1, -50, 299, -50, 302, -54, 303.6, -54, 306, -64.8, 306, -73, 309.8, -73, 314.8, -78, 316.6, -78, 319, -89.8, 319, -97.8, 326.4, -101, 328.6, -101, 332, -116.8, 332, -121, 336, -121, 340, -126, 341.6, -126, 344, -136.8, 344, -145.5, 346.1, -146, 350, -146, 353, -150, 354.7, -150, 356, -157.8, 356, -167.9, 364.5, -173, 366.7, -173, 369, -188.9, 369, -191.9, 376.5, -196, 378.6, -196, 381, -205.8, 381, -215.8, 388.4, -219, 390.6, -219, 394, -234.8, 394, -238.7, 397.5, -240, 400.2, -240, 405, -248.5, 405, -262, 410, -262, 414, -267, 416.3, -267, 414, -284, 414, -286.2, 410.5, -288, 394, -288, 394, -297.8, 389.8, -302, 372.7, -302, 370.7, -315, 350, -315, 350, -324.8, 345.8, -329, 326, -329, 326, -339.1, 323, -341.1, 323, -343, 295, -343, 295, -354, 289.7, -358, 261.8, -358, 259.7, -372, 220.8, -372, 218.7, -386, 185.7, -386, 183, -398.4, 183, -401, 124.8, -401, 123, -413.3, 123, -416)
 
-[node name="HealthLabel" type="Label" parent="CharacterBody2D"]
+[node name="HealthLabel" type="Label" parent="."]
 offset_left = -21.0
 offset_top = -92.0
 offset_right = 19.0
 offset_bottom = -69.0
 text = "teste"
 
-[node name="DamageHitbox" type="Area2D" parent="CharacterBody2D"]
+[node name="DamageHitbox" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/DamageHitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageHitbox"]
 position = Vector2(-4, 1)
 shape = SubResource("RectangleShape2D_mk60s")

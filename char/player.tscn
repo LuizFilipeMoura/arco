@@ -1,41 +1,43 @@
-[gd_scene load_steps=6 format=3 uid="uid://bst1wuhigrq8x"]
+[gd_scene load_steps=7 format=3 uid="uid://8fuuslar50sj"]
 
-[ext_resource type="Texture2D" uid="uid://dwy36e8o5dakl" path="res://char/sprite.png" id="1_imniu"]
-[ext_resource type="Script" uid="uid://cbsae6m2fs7fv" path="res://char/player.gd" id="1_rmstp"]
-[ext_resource type="PackedScene" uid="uid://dfo11eu0peums" path="res://char/arrow.tscn" id="2_vx1ls"]
-[ext_resource type="Texture2D" uid="uid://dp0sdb83122js" path="res://asset/bow_sprite.png" id="3_bwnv6"]
+[ext_resource type="Script" uid="uid://cbsae6m2fs7fv" path="res://char/player.gd" id="1_dk0k5"]
+[ext_resource type="PackedScene" uid="uid://dfo11eu0peums" path="res://char/arrow.tscn" id="2_k3fti"]
+[ext_resource type="Texture2D" uid="uid://dwy36e8o5dakl" path="res://char/sprite.png" id="3_aajn3"]
+[ext_resource type="PackedScene" uid="uid://dca1c3dpoabp8" path="res://char/sound_pulse.tscn" id="3_ivbhp"]
+[ext_resource type="Texture2D" uid="uid://dp0sdb83122js" path="res://asset/bow_sprite.png" id="4_7vf8d"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_imniu"]
 radius = 26.0
 height = 86.0
 
-[node name="Player" type="Node2D"]
-
-[node name="Player" type="CharacterBody2D" parent="."]
-script = ExtResource("1_rmstp")
-arrow_scene = ExtResource("2_vx1ls")
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_dk0k5")
+arrow_scene = ExtResource("2_k3fti")
 min_force = 1.0
 max_force = 5.0
+sound_pulse_scene = ExtResource("3_ivbhp")
+step_sound_min_radius = 450.0
+step_sound_max_radius = 5000.0
 
-[node name="Sprite2D" type="Sprite2D" parent="Player"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, 5.96046e-08)
 scale = Vector2(0.1, 0.1)
-texture = ExtResource("1_imniu")
+texture = ExtResource("3_aajn3")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_imniu")
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_speed = 15.0
 rotation_smoothing_speed = 1.0
 
-[node name="BowSprite" type="Sprite2D" parent="Player"]
+[node name="BowSprite" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(27, 14)
 rotation = -2.63196
 scale = Vector2(0.05, 0.061291)
-texture = ExtResource("3_bwnv6")
+texture = ExtResource("4_7vf8d")
 
-[node name="BowForceLabel" type="Label" parent="Player"]
+[node name="BowForceLabel" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0

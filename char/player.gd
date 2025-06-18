@@ -7,11 +7,19 @@ extends CharacterBody2D
 var has_bow: bool = false
 var is_charging: bool = false
 var charge_start_time: float = 0.0
+var step_sound_timer:float = 0.0
+var step_sound_pulse:Area2D = null
 
 @export var arrow_scene: PackedScene
 @export var min_force: float = 300.0
 @export var max_force: float = 1000.0
 @export var max_charge_time:float = 1.5
+@export var sound_pulse_scene:PackedScene
+@export var step_sound_min_radius:float = 50.0
+@export var step_sound_max_radius:float = 100.0
+@export var step_sound_interval:float = 0.3  # tempo entre passos
+
+
 func _physics_process(delta: float) -> void:
 	var input_vector = Vector2.ZERO
 
@@ -50,6 +58,20 @@ func shoot_arrow(charge_duration:float):
 	arrow.set_direction(direction, force)
 	
 func _process(delta):
+	if is_moving():
+		# Emitir/atualizar SoundPulse
+		if step_sound_pulse == null or not is_instance_valid(step_sound_pulse):
+			step_sound_pulse = sound_pulse_scene.instantiate() as Area2D
+			add_child(step_sound_pulse)
+			step_sound_pulse.position = Vector2.ZERO
+			step_sound_pulse.set_radius(randf_range(step_sound_min_radius, step_sound_max_radius))
+		else:
+			step_sound_pulse.set_radius(randf_range(step_sound_min_radius, step_sound_max_radius))
+	else:
+		# Se parou de andar → desativa pulse
+		if step_sound_pulse != null and is_instance_valid(step_sound_pulse):
+			step_sound_pulse.deactivate()
+			
 	if is_charging:
 		var current_time = Time.get_ticks_msec() / 1000.0
 		var charge_duration = current_time - charge_start_time
@@ -59,6 +81,21 @@ func _process(delta):
 	else:
 		bow_force_label.text = ""
 		
+func is_moving() -> bool:
+	return velocity.length() > 0.1
+	
+func emit_step_sound():
+	if step_sound_pulse == null or not is_instance_valid(step_sound_pulse):
+		step_sound_pulse = sound_pulse_scene.instantiate() as Area2D
+		add_child(step_sound_pulse)
+		step_sound_pulse.position = Vector2.ZERO
+		step_sound_pulse.set_radius(randf_range(step_sound_min_radius, step_sound_max_radius))
+	else:
+		# atualiza o target_radius enquanto anda
+		step_sound_pulse.set_radius(randf_range(step_sound_min_radius, step_sound_max_radius))
+
+	
+	
 func give_bow():
 	has_bow = true
 	print("🏹 Arco coletado!")
