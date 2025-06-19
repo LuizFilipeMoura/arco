@@ -5,15 +5,15 @@
 [ext_resource type="TileSet" uid="uid://bqbiuia8qe5fu" path="res://tile_map_layer.tres" id="2_5vw27"]
 [ext_resource type="PackedScene" uid="uid://dhwf4hejwu21q" path="res://char/bow_pickup.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bkqf0mcqg7km3" path="res://tile_map_layer.tscn" id="6_7mycd"]
-[ext_resource type="Script" uid="uid://bso572y2llruk" path="res://camera_2d.gd" id="6_272bh"]
+[ext_resource type="PackedScene" uid="uid://b2hmqr2i37m3s" path="res://camera_2d.tscn" id="6_272bh"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_272bh"]
-vertices = PackedVector2Array(-613, 75, 1247.98, 591.359, -1154.17, 651.227, -795, 75, -1247.37, -682.18, -795, -139, 941.273, -606.961, -613, -139)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 0, 2), PackedInt32Array(3, 2, 4), PackedInt32Array(5, 3, 4), PackedInt32Array(5, 4, 6), PackedInt32Array(7, 5, 6), PackedInt32Array(6, 1, 0), PackedInt32Array(7, 6, 0)])
+vertices = PackedVector2Array(1305.59, 634.938, -1196.06, 697.289, -658, 30, 976.508, -650.789, -750, 30, -1295.74, -728.867, -750, -94, -658, -94)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 2, 1), PackedInt32Array(4, 1, 5, 6), PackedInt32Array(6, 5, 3, 7), PackedInt32Array(7, 3, 2)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-1328, -760, -1224, 728, 1344, 664, 1000, -680)])
-cell_size = 7.0
-border_size = 7.0
-agent_radius = 75.0
+cell_size = 16.0
+border_size = 5.0
+agent_radius = 30.0
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1bvp3")
@@ -47,21 +47,11 @@ position = Vector2(-147, 13)
 scale = Vector2(2, 2)
 
 [node name="Player1" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(-904, 248)
+position = Vector2(-136, 16)
 max_health = 1
 
 [node name="Player2" parent="." instance=ExtResource("2_0xm2m")]
 position = Vector2(216, -40)
 max_health = 1
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position_smoothing_enabled = true
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-drag_left_margin = 0.1
-drag_top_margin = 0.1
-drag_right_margin = 0.1
-drag_bottom_margin = 0.1
-editor_draw_drag_margin = true
-script = ExtResource("6_272bh")
-camera_speed = 50.0
+[node name="Camera2D" parent="." instance=ExtResource("6_272bh")]

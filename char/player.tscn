@@ -6,9 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://dca1c3dpoabp8" path="res://char/sound_pulse.tscn" id="3_ivbhp"]
 [ext_resource type="Texture2D" uid="uid://dp0sdb83122js" path="res://asset/bow_sprite.png" id="4_7vf8d"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_imniu"]
-radius = 26.0
-height = 86.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_ivbhp"]
+radius = 5.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ivbhp"]
 radius = 22.0
@@ -28,7 +27,7 @@ scale = Vector2(0.1, 0.1)
 texture = ExtResource("3_aajn3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_imniu")
+shape = SubResource("CircleShape2D_ivbhp")
 
 [node name="BowSprite" type="Sprite2D" parent="."]
 visible = false
@@ -43,6 +42,7 @@ offset_bottom = 23.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 avoidance_enabled = true
+radius = 500.0
 debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(1, 0, 1, 1)
