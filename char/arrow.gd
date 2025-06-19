@@ -32,6 +32,7 @@ func setup_signals():
 
 func start_lifetime_timer():
 	await get_tree().create_timer(lifetime).timeout
+	SoundPulse.spawn(get_tree().current_scene, 600, global_position, 0.5, 0.15, 0.2)
 	queue_free()
 
 # === MOVIMENTO ===
@@ -53,6 +54,7 @@ func check_min_velocity():
 		return
 
 	if velocity.length() < min_velocity_before_despawn:
+		SoundPulse.spawn(get_tree().current_scene, 600, global_position, 0.5, 0.15, 0.2)
 		queue_free()
 
 # === INTERFACE EXTERNA ===

@@ -61,13 +61,14 @@ func _flip_direction():
 # === VIDA ===
 func take_damage(amount: int):
 	current_health -= amount
-	SoundPulse.spawn(get_tree().current_scene, randf_range(1000, 1500), global_position, 1)
+	SoundPulse.spawn(get_tree().current_scene, 250, global_position, 1)
 	print("💥 inimigo atingido! vida: ", current_health)
 	update_health_label()
 	if current_health <= 0:
 		die()
 
 func die():
+	SoundPulse.spawn(get_tree().current_scene, randf_range(1000, 1500), global_position, 1)
 	queue_free()
 
 func update_health_label():
