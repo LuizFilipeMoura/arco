@@ -38,6 +38,17 @@ var current_health: int
 @export var stop_threshold_distance: float = 4.0
 
 func _ready():
+	# Aumenta o “tamanho” do agente para manter distância dos obstáculos dinâmicos
+	nav_agent.radius = 32.0
+	
+	# Define até que distância ele “vê” outros agentes para desviar
+	nav_agent.neighbor_distance = 64.0
+	
+	# Habilita avoidance (RVO) entre agentes
+	nav_agent.avoidance_enabled = true
+	nav_agent.avoidance_layers = 1  # ajuste para a layer de agentes
+	nav_agent.avoidance_priority = 1.0
+	
 	current_health = max_health
 	update_health_label()
 	

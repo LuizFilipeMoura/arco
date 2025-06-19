@@ -6,6 +6,10 @@ var current_index: int = 0
 
 func _ready() -> void:
 	# Inicializa lista de jogadores
+	
+	
+	var obstacles = get_tree().get_nodes_in_group("nav_obstacles")
+	print("Obstáculos nav_obstacles:", obstacles)
 	players = [$Player1, $Player2]
 	PlayerController.player_changed.connect(Callable(self, "_on_player_changed"))
 	# Seleciona primeiro jogador vivo
