@@ -1,3 +1,4 @@
+class_name Arrow
 extends Area2D
 
 # === CONFIGURAÇÕES ===

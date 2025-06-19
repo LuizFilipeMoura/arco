@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://s60nsv4toap5"]
+[gd_scene load_steps=6 format=3 uid="uid://s60nsv4toap5"]
 
 [ext_resource type="Script" uid="uid://b5o1gxp41pil6" path="res://char/enemy.gd" id="1_nfc0p"]
 [ext_resource type="Texture2D" uid="uid://da843mu7w2e0e" path="res://char/enemy.png" id="2_rgpw8"]
 [ext_resource type="Texture2D" uid="uid://r6m3xkhooy21" path="res://char/visioncone_sprite.png" id="3_jrcno"]
+[ext_resource type="PackedScene" uid="uid://b8dh5j70ys8h2" path="res://sound_sensor.tscn" id="4_6cqy1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mk60s"]
 size = Vector2(73, 96)
@@ -47,3 +48,5 @@ text = "teste"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageHitbox"]
 position = Vector2(-4, 1)
 shape = SubResource("RectangleShape2D_mk60s")
+
+[node name="SoundSensor" parent="." instance=ExtResource("4_6cqy1")]

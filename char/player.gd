@@ -1,7 +1,9 @@
+class_name Player
 extends CharacterBody2D
 
 # === CONFIGURAÇÕES DO PLAYER ===
 @export var speed: float = 500.0
+@export var max_health: int = 5
 
 # === CONFIGURAÇÕES DO ARCO ===
 @export var arrow_scene: PackedScene
@@ -18,6 +20,7 @@ extends CharacterBody2D
 # === REFERÊNCIAS DE NÓS ===
 @onready var bow_sprite: Sprite2D = $BowSprite
 @onready var bow_force_label: Label = $BowForceLabel
+@onready var health_label: Label = $HealthLabel
 
 # === NAVEGAÇÃO ===
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
@@ -28,11 +31,16 @@ var has_bow: bool = false
 var is_charging: bool = false
 var charge_start_time: float = 0.0
 var step_sound_pulse: Area2D = null
+var current_health: int
 
 # === CICLO DE FÍSICA ===
 @export var stop_move_distance: float = 20.0
 @export var stop_threshold_distance: float = 4.0
 
+func _ready():
+	current_health = max_health
+	update_health_label()
+	
 func _process_order(delta: float) -> void:
 	var next_pos = nav_agent.get_next_path_position()
 	var to_next = next_pos - global_position
@@ -99,7 +107,7 @@ func release_arrow():
 	shoot_arrow(charge_duration)
 
 func shoot_arrow(charge_duration: float):
-	var arrow = arrow_scene.instantiate() as Area2D
+	var arrow = arrow_scene.instantiate() as Arrow
 	get_tree().current_scene.add_child(arrow)
 	arrow.global_position = global_position
 
@@ -158,3 +166,21 @@ func update_step_sound_pulse():
 func deactivate_step_sound():
 	if step_sound_pulse != null and is_instance_valid(step_sound_pulse):
 		step_sound_pulse.deactivate()
+		
+func take_damage(amount: int) -> void:
+	print("take damange", amount)
+	current_health -= amount
+	update_health_label()
+	print("💥 player atingido! vida: ", current_health)
+	if current_health <= 0:
+		die()
+		
+func die() -> void:
+	print("💀 player morreu")
+	# Troca para o próximo player
+	PlayerController.switch_current_player()
+	queue_free()
+
+func update_health_label() -> void:
+	if health_label:
+		health_label.text = str(current_health, " / ", max_health)
