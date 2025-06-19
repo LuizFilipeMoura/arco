@@ -8,6 +8,10 @@
 
 config_version=5
 
+[addon_importer]
+
+show_on_startup=false
+
 [application]
 
 config/name="Arco"
@@ -18,6 +22,11 @@ config/icon="res://icon.svg"
 [autoload]
 
 PlayerController="*res://player_controller.gd"
+Signal_Debugger="*res://addons/SignalVisualizer/Debugger/SignalDebugger.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/SignalVisualizer/plugin.cfg", "res://addons/vision_cone_2d/plugin.cfg")
 
 [input]
 

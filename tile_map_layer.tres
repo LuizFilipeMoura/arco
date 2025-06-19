@@ -1634,7 +1634,7 @@ texture = ExtResource("3_1dowt")
 11:21/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [resource]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 3
 navigation_layer_0/layers = 1
 sources/1 = SubResource("TileSetAtlasSource_uuaxm")
 sources/2 = SubResource("TileSetAtlasSource_c3an2")

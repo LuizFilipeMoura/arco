@@ -1,6 +1,9 @@
 class_name Enemy
 # Enemy.gd
 extends CharacterBody2D
+@export var vision_renderer: Polygon2D
+@onready var original_color = vision_renderer.color if vision_renderer else Color.WHITE
+@export var alert_color: Color
 
 # === CONFIGURAÇÕES ===
 @export var max_health: int = 3
@@ -22,8 +25,8 @@ var is_on_patrol := true
 
 # === FUNÇÕES DE CICLO ===
 func _ready():
-	setup_health()
 	setup_vision()
+	setup_health()
 	setup_sound_sensor()
 	setup_detection_label()
 	setup_flip_timer()
@@ -34,8 +37,19 @@ func setup_health():
 	update_health_label()
 
 func setup_vision():
-	vision_area.connect("body_entered", Callable(self, "_on_vision_area_body_entered"))
+	pass
 
+func _on_vision_cone_area_body_entered(body: Node2D) -> void:
+	print("%s is seeing %s" % [self, body])
+	if !body.is_in_group("Player"): return
+	vision_renderer.color = alert_color
+	has_spotted_enemy(body.global_position)
+	
+
+func _on_vision_cone_area_body_exited(body: Node2D) -> void:
+	print("%s stopped seeing %s" % [self, body])
+	vision_renderer.color = original_color
+	
 func setup_sound_sensor():
 	sound_sensor.connect("sound_heard", Callable(self, "_on_sound_heard"))
 
@@ -92,7 +106,7 @@ func has_spotted_enemy(position: Vector2) -> void:
 	# Exibe mensagem de detecção
 	show_detection("🔍 ALVO DETECTADO em " + str(position))
 	# Vira o inimigo para o ponto de detecção
-	look_at(position)
+	# look_at(position)
 	# Aqui você pode trocar o estado do inimigo para perseguir ou outra lógica de AI
 
 # === PROJÉTIL ===
