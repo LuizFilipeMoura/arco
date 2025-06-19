@@ -23,7 +23,7 @@ func _on_body_entered(body: Node):
 	queue_free()
 
 func is_player(body: Node) -> bool:
-	return body.name == "Player"
+	return body.is_in_group("Player")
 
 func give_bow_to_player(player: Node):
 	if player.has_method("give_bow"):

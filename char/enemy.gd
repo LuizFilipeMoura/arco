@@ -67,7 +67,7 @@ func update_health_label():
 
 # === DETECÇÃO ===
 func _on_vision_area_body_entered(body):
-	if body.name == "Player":
+	if body.is_in_group("Player"):
 		show_detection()
 
 func show_detection():

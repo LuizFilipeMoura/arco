@@ -13,10 +13,15 @@ extends CharacterBody2D
 @export var step_sound_min_radius: float = 50.0
 @export var step_sound_max_radius: float = 100.0
 @export var step_sound_interval: float = 0.3
+@export var stop_velocity_threshold: float = 100.0
 
 # === REFERÊNCIAS DE NÓS ===
 @onready var bow_sprite: Sprite2D = $BowSprite
 @onready var bow_force_label: Label = $BowForceLabel
+
+# === NAVEGAÇÃO ===
+@onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
+var has_order: bool = false
 
 # === ESTADOS ===
 var has_bow: bool = false
@@ -25,30 +30,53 @@ var charge_start_time: float = 0.0
 var step_sound_pulse: Area2D = null
 
 # === CICLO DE FÍSICA ===
-func _physics_process(delta: float) -> void:
-	handle_movement()
+@export var stop_move_distance: float = 20.0
+@export var stop_threshold_distance: float = 4.0
+
+func _process_order(delta: float) -> void:
+	var next_pos = nav_agent.get_next_path_position()
+	var to_next = next_pos - global_position
+	var dist = to_next.length()
+
+	# quando chegar perto o suficiente
+	if dist <= stop_threshold_distance:
+		global_position = next_pos
+		_stop_order()
+		return
+
+	var dir = to_next / dist
+	velocity = dir * speed
+	var motion = velocity * delta
+	var collision = move_and_collide(motion)
+	if collision:
+		_stop_order()
+
+func _stop_order() -> void:
+	has_order = false
+	velocity = Vector2.ZERO
+	# limpa target pra não persistir erro
+	nav_agent.target_position = global_position
+
 
 # === CICLO DE PROCESSO NORMAL ===
 func _process(delta: float) -> void:
 	update_step_sound()
 	update_bow_ui()
-
+	
+func _physics_process(delta: float) -> void:
+	if has_order:
+		_process_order(delta)
+		
 # === ENTRADA DO MOUSE ===
 func _unhandled_input(event):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		if PlayerController.current_player == self:
+			has_order = true
+			nav_agent.target_position = get_global_mouse_position()
 	if has_bow:
 		handle_bow_input(event)
 
 # === MOVIMENTO ===
-func handle_movement():
-	var input_vector = get_input_vector()
-	velocity = input_vector * speed
-	move_and_slide()
-
-func get_input_vector() -> Vector2:
-	var input_vector = Vector2.ZERO
-	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-	input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
-	return input_vector.normalized()
 
 func is_moving() -> bool:
 	return velocity.length() > 0.1

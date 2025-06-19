@@ -1,10 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1t2wf6d01s68"]
+[gd_scene load_steps=7 format=3 uid="uid://d1t2wf6d01s68"]
 
+[ext_resource type="Script" uid="uid://bay7f11gv40u" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://8fuuslar50sj" path="res://char/player.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://dhwf4hejwu21q" path="res://char/bow_pickup.tscn" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://bso572y2llruk" path="res://camera_2d.gd" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://s60nsv4toap5" path="res://char/enemy.tscn" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://bkqf0mcqg7km3" path="res://tile_map_layer.tscn" id="6_7mycd"]
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_1bvp3")
+
+[node name="TileMapLayer" parent="." instance=ExtResource("6_7mycd")]
+position = Vector2(-234, -162)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -15,11 +22,27 @@ offset_right = 128.0
 offset_bottom = 44.0
 text = "TESTE"
 
-[node name="BowPickup" parent="." instance=ExtResource("4_1bvp3")]
+[node name="BowPickup" parent="." groups=["Pickups"] instance=ExtResource("4_1bvp3")]
 position = Vector2(-147, 13)
 scale = Vector2(2, 2)
 
-[node name="Enemy" parent="." instance=ExtResource("5_lquwl")]
+[node name="Enemy" parent="." groups=["Enemies"] instance=ExtResource("5_lquwl")]
 position = Vector2(-216, -248)
 
-[node name="Player" parent="." instance=ExtResource("2_0xm2m")]
+[node name="Player1" parent="." groups=["Player"] instance=ExtResource("2_0xm2m")]
+position = Vector2(-84, -46)
+
+[node name="Player2" parent="." groups=["Player"] instance=ExtResource("2_0xm2m")]
+position = Vector2(668, -60)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
+editor_draw_drag_margin = true
+script = ExtResource("5_7mycd")
+camera_speed = 50.0
