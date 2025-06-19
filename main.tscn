@@ -1,20 +1,36 @@
-[gd_scene load_steps=8 format=3 uid="uid://d1t2wf6d01s68"]
+[gd_scene load_steps=8 format=4 uid="uid://d1t2wf6d01s68"]
 
 [ext_resource type="Script" uid="uid://bay7f11gv40u" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://8fuuslar50sj" path="res://char/player.tscn" id="2_0xm2m"]
+[ext_resource type="TileSet" uid="uid://bqbiuia8qe5fu" path="res://tile_map_layer.tres" id="2_5vw27"]
 [ext_resource type="PackedScene" uid="uid://dhwf4hejwu21q" path="res://char/bow_pickup.tscn" id="4_1bvp3"]
-[ext_resource type="Script" uid="uid://bso572y2llruk" path="res://camera_2d.gd" id="5_7mycd"]
-[ext_resource type="PackedScene" uid="uid://s60nsv4toap5" path="res://char/enemy.tscn" id="5_lquwl"]
-[ext_resource type="PackedScene" uid="uid://ccsvbnroj1a1h" path="res://bullet.tscn" id="6_5vw27"]
 [ext_resource type="PackedScene" uid="uid://bkqf0mcqg7km3" path="res://tile_map_layer.tscn" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://bso572y2llruk" path="res://camera_2d.gd" id="6_272bh"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_272bh"]
+vertices = PackedVector2Array(-613, 75, 1247.98, 591.359, -1154.17, 651.227, -795, 75, -1247.37, -682.18, -795, -139, 941.273, -606.961, -613, -139)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 0, 2), PackedInt32Array(3, 2, 4), PackedInt32Array(5, 3, 4), PackedInt32Array(5, 4, 6), PackedInt32Array(7, 5, 6), PackedInt32Array(6, 1, 0), PackedInt32Array(7, 6, 0)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-1328, -760, -1224, 728, 1344, 664, 1000, -680)])
+cell_size = 7.0
+border_size = 7.0
+agent_radius = 75.0
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1bvp3")
 
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_272bh")
+
+[node name="Obstacles" type="TileMapLayer" parent="NavigationRegion2D"]
+top_level = true
+tile_map_data = PackedByteArray("AADT//z/AAAOAAYAAADT//3/AAAOAAcAAADT//7/AAAOAAgAAADT////AAAOAAkAAADU//z/AAAPAAYAAADU//3/AAAPAAcAAADU//7/AAAPAAgAAADU////AAAPAAkAAAA=")
+tile_set = ExtResource("2_5vw27")
+
 [node name="Tilesets" type="Node2D" parent="."]
 
-[node name="TileMapLayer" parent="Tilesets" instance=ExtResource("6_7mycd")]
+[node name="Cenário" parent="Tilesets" instance=ExtResource("6_7mycd")]
 position = Vector2(-234, -162)
+script = null
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -24,22 +40,18 @@ offset_top = 21.0
 offset_right = 128.0
 offset_bottom = 44.0
 text = "TESTE"
+metadata/_edit_use_anchors_ = true
 
 [node name="BowPickup" parent="." groups=["Pickups"] instance=ExtResource("4_1bvp3")]
 position = Vector2(-147, 13)
 scale = Vector2(2, 2)
 
-[node name="Enemy" parent="." groups=["Enemies"] instance=ExtResource("5_lquwl")]
-position = Vector2(-216, -248)
-alert_color = Color(1, 0, 0, 0.545098)
-bullet_scene = ExtResource("6_5vw27")
-
 [node name="Player1" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(-838, 250)
+position = Vector2(-904, 248)
 max_health = 1
 
 [node name="Player2" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(668, -60)
+position = Vector2(216, -40)
 max_health = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -51,5 +63,5 @@ drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
 editor_draw_drag_margin = true
-script = ExtResource("5_7mycd")
+script = ExtResource("6_272bh")
 camera_speed = 50.0

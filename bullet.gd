@@ -22,6 +22,7 @@ func setup_signals():
 	
 func _physics_process(delta: float) -> void:
 	# Move o projétil manualmente
+	print("aqui1")
 	position += velocity * delta
 
 func _on_area_entered(hurtboxArea: Node) -> void:
