@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfo11eu0peums"]
+
+[ext_resource type="Script" uid="uid://dies5mso1r6hi" path="res://scripts/arrow.gd" id="1_23jat"]
+[ext_resource type="Texture2D" uid="uid://bi8wkibi43v5i" path="res://assets/entities/objects/arrow.png" id="2_q8ifc"]
+[ext_resource type="PackedScene" uid="uid://dkvle71ft4r7s" path="res://scenes/projectile_management.tscn" id="3_q8ifc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t107c"]
+radius = 20.0
+height = 96.0
+
+[node name="Arrow" type="Area2D"]
+script = ExtResource("1_23jat")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-4, 3)
+rotation = -0.785398
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_q8ifc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_t107c")
+
+[node name="ProjectileManagement" parent="." instance=ExtResource("3_q8ifc")]
