@@ -52,7 +52,7 @@ position = Vector2(-136, 16)
 max_health = 1
 
 [node name="Player2" parent="." instance=ExtResource("5_rssyh")]
-position = Vector2(216, -40)
+position = Vector2(512, 232)
 max_health = 1
 
 [node name="Camera2D" parent="." instance=ExtResource("6_hwp66")]

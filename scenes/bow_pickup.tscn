@@ -7,6 +7,7 @@
 radius = 16.0
 
 [node name="BowPickup" type="Area2D"]
+collision_layer = 4
 script = ExtResource("1_0s61u")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -7,6 +7,8 @@
 radius = 96.1873
 
 [node name="SoundSensor" type="Area2D"]
+collision_layer = 32
+collision_mask = 32
 script = ExtResource("1_so0fp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

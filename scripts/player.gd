@@ -7,8 +7,9 @@ extends CharacterBody2D
 
 # === CONFIGURAÇÕES DO ARCO ===
 @export var arrow_scene: PackedScene
-@export var max_charge_time: float = 1.5
-@export var max_force_multiplier: float = 1.5  # máximo multiplicador de dano
+@export var max_charge_time: float = 1
+@export var max_force_multiplier: float = 5  # máximo multiplicador de dano
+@export var base_arrow_speed: float = 400.0
 
 # === CONFIGURAÇÕES DO PASSO / SOM ===
 @export var sound_pulse_scene: PackedScene
@@ -37,6 +38,7 @@ var step_sound_pulse: Area2D = null
 # === CICLO DE FÍSICA ===
 @export var stop_move_distance: float = 20.0
 @export var stop_threshold_distance: float = 4.0
+
 
 func _ready() -> void:
 	nav_agent.radius = 32.0
@@ -107,23 +109,23 @@ func release_arrow() -> void:
 	shoot_arrow(charge_duration)
 
 func shoot_arrow(charge_duration: float) -> void:
-	var arrow = arrow_scene.instantiate() as Arrow
+	# instancia e adiciona a flecha
+	var arrow = arrow_scene.instantiate()
 	get_tree().current_scene.add_child(arrow)
+	print("arrow", arrow)
 	arrow.global_position = global_position
 
-	# direção do disparo
+	# direção e carregamento
 	var dir = (get_global_mouse_position() - global_position).normalized()
-	# quanto tempo carregou [0,1]
 	var ratio = clamp(charge_duration / max_charge_time, 0, 1)
-	# multiplicador de força para dano [0..max_force_multiplier]
-	var force = lerp(0.0, max_force_multiplier, ratio)
-	# aplica uma fração mínima de velocidade até o máximo
-	var speed_factor = lerp(0.2, 1.0, ratio)
-	# velocidade final considerando o speed do manager
-	var proj_speed = arrow.pm.speed * speed_factor
 
-	# dispara: seta direção/velocidade e já configura o damage no manager
-	arrow.set_direction(dir, proj_speed, force)
+	# speed_factor entre 20% e 100%
+	var speed_factor = lerp(0.2, 1.0, ratio)
+
+	# dispara, passando só o speed_factor
+	arrow.pm.set_direction(dir, speed_factor)
+
+
 
 
 func get_current_charge_duration() -> float:

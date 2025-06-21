@@ -13,9 +13,6 @@ func setup_signals():
 
 # === INTERAÇÕES ===
 func _on_body_entered(body: Node):
-	if not is_player(body):
-		return
-
 	give_bow_to_player(body)
 	play_pickup_sound()
 	spawn_pickup_sound_pulse()

@@ -8,16 +8,27 @@
 radius = 20.0
 height = 96.0
 
-[node name="Arrow" type="Area2D"]
+[node name="Arrow" type="RigidBody2D"]
+rotation = 0.808819
+collision_layer = 8
+collision_mask = 18
+gravity_scale = 0.0
+max_contacts_reported = 10
 script = ExtResource("1_23jat")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-4, 3)
-rotation = -0.785398
+position = Vector2(-3, -4)
+rotation = 0.764546
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_q8ifc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.58762
 shape = SubResource("CapsuleShape2D_t107c")
 
 [node name="ProjectileManagement" parent="." instance=ExtResource("3_q8ifc")]
+speed = 2500.0
+deceleration = 2500.0
+min_speed_threshold = 10.0
+
+[connection signal="body_entered" from="." to="ProjectileManagement" method="_on_arrow_body_entered"]

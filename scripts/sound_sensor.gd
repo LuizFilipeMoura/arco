@@ -10,10 +10,6 @@ signal sound_heard(global_pos)
 @onready var sprite    := $Sprite2D
 
 func _ready() -> void:
-	# Onde este sensor “vive”
-	collision_layer = 1 << 2   # Layer 3 (SoundSensor)
-	# Só “vê” pulsos em SoundPulse
-	collision_mask = 1 << 1    # Layer 2 (SoundPulse)
 	setup_signals()
 	_update_hearing_range()
 
