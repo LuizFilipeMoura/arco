@@ -18,8 +18,6 @@ const BASE_RADIUS: float = 64.0  # depende do seu sprite
 
 # === FUNÇÕES DE CICLO ===
 func _ready():
-	collision_layer = 1 << 1   # Layer 2 (SoundPulse)
-	collision_mask = 0         # Não precisa detectar nada
 	add_to_group("SoundPulse")
 	set_process(true)
 

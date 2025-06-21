@@ -4,6 +4,7 @@ extends CharacterBody2D
 # === RENDERIZAÇÃO DE VISÃO ===
 @export var vision_renderer: Polygon2D
 @onready var original_color = vision_renderer.color if vision_renderer else Color.WHITE
+@onready var vision_cone2D = $VisionCone2D
 @export var alert_color: Color
 
 # === CONFIGURAÇÕES ===
@@ -12,9 +13,9 @@ extends CharacterBody2D
 @export var bullet_speed: float = 400.0
 @export var bullet_damage: int = 1
 @export var fire_interval: float = 1.0  # intervalo entre tiros em segundos
+@onready var fire_timer: Timer = Timer.new()
 
 # === REFERÊNCIAS DE NÓS ===
-@onready var vision_area: Area2D       = $VisionArea
 @onready var sound_sensor: SoundSensor = $SoundSensor
 @onready var enemy_sprite: Sprite2D    = $Sprite2D
 @onready var health_label: Label       = $HealthLabel
@@ -23,11 +24,9 @@ extends CharacterBody2D
 # === ESTADOS ===
 var flip_direction: bool = false
 var detection_label: Label
-var is_on_patrol := true
-var current_target: Node2D = null  # referência ao Player enquanto visível
+var is_on_patrol := false
+var player_in_sight : Player
 
-# Timer para disparos contínuos
-@onready var fire_timer: Timer = Timer.new()
 
 func _ready() -> void:
 	setup_sound_sensor()
@@ -83,14 +82,25 @@ func update_health_label() -> void:
 	if health_label:
 		health_label.text = "%d / %d" % [health_manager.current_health, health_manager.max_health]
 
+func _process(delta):
+	if player_in_sight:
+		rotate_vision_cone(player_in_sight.global_position)
+
+func rotate_vision_cone(position): 
+	var dir_sound = (position - global_position).normalized()
+	vision_cone2D.rotation = dir_sound.angle() - 1.6
 
 func _on_sound_heard(sound_pos: Vector2) -> void:
+	if player_in_sight: return
 	# Dispara uma vez na direção do som
-	shoot_at_target(sound_pos)
+	# rotaciona o cone de visão (Polygon2D) para apontar ao som
+	rotate_vision_cone(sound_pos)
+	show_detection("🔉 SOM DETECTADO")
 
 func _on_fire_timeout() -> void:
-	if current_target:
-		shoot_at_target(current_target.global_position)
+	print("fire timeout")
+	if player_in_sight:
+		shoot_at_target(player_in_sight.global_position)
 
 func shoot_at_target(target_pos: Vector2) -> void:
 	var bullet = bullet_scene.instantiate()
@@ -107,20 +117,16 @@ func show_detection(texto: String) -> void:
 
 
 func _on_vision_cone_area_body_entered(body):
-	if not body.is_in_group("Player"):
-		return
-	current_target = body
+	if not player_in_sight:
+		player_in_sight = body as Player
 	vision_renderer.color = alert_color
 	is_on_patrol = false
 	show_detection("🔍 ALVO DETECTADO")
-	shoot_at_target(current_target.global_position)
-	fire_timer.start()
-	pass # Replace with function body.
+	if fire_timer.is_stopped():
+		fire_timer.start()
 
 
 func _on_vision_cone_area_body_exited(body):
-	if body.is_in_group("Player"):
-		vision_renderer.color = original_color
-		fire_timer.stop()
-		current_target = null
+	player_in_sight = null
+	vision_renderer.color = original_color
 	pass # Replace with function body.
