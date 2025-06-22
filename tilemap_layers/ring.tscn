@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmmci0w5uun8f"]
+
+[ext_resource type="Script" uid="uid://dcf77ymgvyb6q" path="res://tilemap_layers/ring.gd" id="1_5xngb"]
+[ext_resource type="Texture2D" uid="uid://cqeen4bxsw7oy" path="res://tilemap_layers/ring.png" id="2_4emqo"]
+
+[node name="Ring" type="Sprite2D"]
+texture_filter = 1
+texture = ExtResource("2_4emqo")
+script = ExtResource("1_5xngb")

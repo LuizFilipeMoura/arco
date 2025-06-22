@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://dyjipdqqhb3nf"]
-
-[ext_resource type="Script" uid="uid://d0a6q0yhwmlq4" path="res://scripts/health_management.gd" id="1_humjj"]
-[ext_resource type="PackedScene" uid="uid://drvgkns1v81b2" path="res://addons/simple_health_bar/health_bar.tscn" id="2_oyip8"]
-
-[node name="HealthManagement" type="Node2D"]
-script = ExtResource("1_humjj")
-
-[node name="HealthBar" parent="." instance=ExtResource("2_oyip8")]

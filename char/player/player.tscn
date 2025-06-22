@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://d4hhelem44my1"]
+
+[ext_resource type="Texture2D" uid="uid://blc6mcgrx0at1" path="res://char/player/assets/sprite.png" id="1_g708d"]
+[ext_resource type="Script" uid="uid://vx3hvqihjjbu" path="res://char/player/scripts/player.gd" id="1_tklbj"]
+[ext_resource type="PackedScene" uid="uid://cwx3ten7xminl" path="res://char/common/movement.tscn" id="3_dcpga"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_apw32"]
+radius = 5.0
+
+[node name="Player" type="StaticBody2D"]
+script = ExtResource("1_tklbj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.01, 0.01)
+texture = ExtResource("1_g708d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_apw32")
+
+[node name="Movement" parent="." instance=ExtResource("3_dcpga")]

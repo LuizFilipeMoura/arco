@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://g33r5irv6als"]
+
+[ext_resource type="PackedScene" uid="uid://ocsvjkeptwn2" path="res://tilemap_layers/tile_map_layer.tscn" id="1_co18y"]
+[ext_resource type="Script" uid="uid://d2eeuqkwqswj6" path="res://debug_rooms/main/main.gd" id="1_voo0i"]
+[ext_resource type="PackedScene" uid="uid://d4hhelem44my1" path="res://char/player/player.tscn" id="2_n38kc"]
+[ext_resource type="Script" uid="uid://qsegubf04ftu" path="res://debug_rooms/main/Cells.gd" id="4_nfca6"]
+[ext_resource type="Texture2D" uid="uid://cqeen4bxsw7oy" path="res://tilemap_layers/ring.png" id="5_50du0"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_voo0i")
+
+[node name="TileMapLayer" parent="." instance=ExtResource("1_co18y")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2(1.10593, 1.04513)
+zoom = Vector2(4, 4)
+
+[node name="Player" parent="." instance=ExtResource("2_n38kc")]
+
+[node name="CellLabels" type="Node2D" parent="."]
+texture_filter = 1
+script = ExtResource("4_nfca6")
+hover_texture = ExtResource("5_50du0")
+
+[editable path="Player"]
